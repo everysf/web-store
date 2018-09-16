@@ -12,5 +12,3 @@ CREATE TABLE products (
    stock_quantity INT NOT NULL
 );
 
-INSERT INTO products (item_id, product_name, department_name, price, stock_quantity)
-VALUES (01, "Amazon Echo", "Technology", 100, 256);

@@ -3,12 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "bamazon.js",
-  "dependencies": {
-    "inquirer": "^6.2.0",
-    "mysql": "^2.16.0",
-    "table": "^5.0.2"
-  },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -22,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/everysf/web-store/issues"
   },
-  "homepage": "https://github.com/everysf/web-store#readme"
+  "homepage": "https://github.com/everysf/web-store#readme",
+  "dependencies": {
+    "inquirer": "^6.2.0",
+    "mysql": "^2.16.0"
+  }
 }
