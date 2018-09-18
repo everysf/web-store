@@ -47,21 +47,40 @@ function deleteItems() {
 function removeItem() {
     console.log("Which item would you like to purchase?")
     inquirer.prompt([{
-        message: "Select Item ID",
-        name: "item_ID"
+        message: "Select SKU",
+        name: "item"
     }]).then(function(answer){
-        var itemID = answer.itemID
-        connection.query("SELECT * FROM products WHERE ?", {item_ID: item_ID}, function(error, response){
-            connection.query("UPDATE products SET ? WHERE ?", [
+        
+        connection.query("SELECT * FROM products WHERE ?", {item_ID: answer.item}, function(error, response){
+
+            if (response[0].stock_quantity < 1 ) {
+                console.log("There are no more of this item")
+                homeMenu()
+                return
+            }
+
+            var newQuantity = response[0].stock_quantity - 1
+            var currentPrice = response[0].price
+            var currentName = response[0].product_name
+
+            connection.query("UPDATE products SET ? where ?", [
                 {
-                    stock_quantity: stock_quantity-1
-                },
-                {
-                    item_id: item_id
+                    stock_quantity: newQuantity
+                }, {
+                    item_ID: answer.item
                 }
             ], function(error, response){
                 if(error) throw (error)
-                readItems(homeMenu)
+                console.log("")
+                console.log(space)
+                console.log("")
+                console.log("You purchased " + currentName + " for $" + currentPrice)
+                console.log("Updated Quantity: " + newQuantity)
+                console.log("")
+                console.log(space)
+                console.log("")
+                homeMenu()
+                return
             })
 
         })
@@ -102,7 +121,7 @@ function createItems(){
 function renderInventory(res, callback) {
     console.log(res.length)
     for (var i = 0; i < res.length; i++) {
-        console.log("SKU " + res[i].item_id + " || " + res[i].product_name)
+        console.log("SKU " + res[i].item_id + " || " + res[i].product_name + " || Units available: " + res[i].stock_quantity)
     }
     callback()
 }
